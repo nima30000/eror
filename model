@@ -1,0 +1,19 @@
+class H_Timer(models.Model):
+	times=models.DateTimeField()
+	def __str__(self):
+		return str(self.times)
+class Doctor(models.Model):
+	id=models.AutoField(primary_key=True)
+	name=models.CharField(default='',max_length=200,help_text="نام دکتر را وارد کنید")
+	Daryafti=models.BigIntegerField(default=0)
+	time=models.ManyToManyField(H_Timer)
+class Bimar(models.Model):
+	id = models.AutoField(primary_key=True)
+	name=models.CharField(null=False,max_length=200,help_text="نام بیمار را وارد کنید")
+	start_day=models.DateTimeField(blank=True,auto_now_add=True )
+	bime= models.BooleanField(default=False)
+	doctor_moalej= models.ForeignKey('Doctor',on_delete=models.CASCADE)
+	rezerv_time=models.ManyToManyField('doctor_moalej.time',blank=True,null=True,related_name="rezerv")
+
+	def __str__(self):
+		return self.name
